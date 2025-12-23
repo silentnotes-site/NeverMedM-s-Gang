@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SilentNotes Request</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #1e1e2f;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container {
+    background: #2c2c3f;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    width: 300px;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: #4caf50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+button:hover {
+    background: #45a049;
+}
+#status {
+    margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>SilentNotes Request</h2>
+    <input type="text" id="username" placeholder="Inserisci il tuo username SilentNotes">
+    <input type="text" id="code" placeholder="Inserisci il codice">
+    <button onclick="sendRequest()">Invia richiesta</button>
+    <p id="status"></p>
+</div>
+
+<script>
+async function sendRequest() {
+    const username = document.getElementById('username').value.trim();
+    const code = document.getElementById('code').value.trim();
+    const status = document.getElementById('status');
+
+    if(!username || !code){
+        status.textContent = "Per favore, inserisci username e codice!";
+        status.style.color = "red";
+        return;
+    }
+
+    try {
+        const response = await fetch('/send', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, code })
+        });
+
+        if(response.ok){
+            status.textContent = "Richiesta inviata con successo!";
+            status.style.color = "lightgreen";
+            document.getElementById('username').value = "";
+            document.getElementById('code').value = "";
+        } else {
+            status.textContent = "Errore nell'invio della richiesta.";
+            status.style.color = "red";
+        }
+    } catch (error) {
+        status.textContent = "Errore: impossibile inviare la richiesta.";
+        status.style.color = "red";
+        console.error(error);
+    }
+}
+</script>
+</body>
+</html>
