@@ -1,11 +1,21 @@
 import express from 'express'
 import fetch from 'node-fetch'
 import cors from 'cors'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+
+// root per servire la pagina HTML
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'))
+})
 
 app.post('/claim', async (req, res) => {
     const { username, code } = req.body
@@ -14,7 +24,6 @@ app.post('/claim', async (req, res) => {
         return res.status(400).json({ success: false, message: "Dati mancanti" })
     }
 
-    // verifica codice corretto
     if (code !== "Natale25") {
         return res.status(400).json({ success: false, message: "Codice non valido" })
     }
