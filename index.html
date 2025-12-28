@@ -1,105 +1,190 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SilentNotes Codes</title>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<meta charset="utf-8">
+<title>NeverMedM's Gang</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #1e1e2f;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0b1a0f;color:#f0f0f0;font-family:Inter,system-ui;overflow-x:hidden}
+.bg{position:fixed;inset:0;background:
+radial-gradient(circle at 20% 15%,rgba(0,120,60,.22),transparent 45%),
+radial-gradient(circle at 80% 80%,rgba(0,90,50,.18),transparent 45%);
+z-index:-1}
+header{position:fixed;top:0;width:100%;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(11,26,15,.95);backdrop-filter:blur(10px);z-index:10;border-bottom:1px solid rgba(0,120,60,.25)}
+header h1{font-family:Orbitron;font-size:1.25rem;letter-spacing:2px;color:#00cc55}
+nav{display:flex;gap:25px;flex-wrap:wrap}
+nav a{color:#f0f0f0;text-decoration:none;font-weight:600;opacity:.75;transition:.25s;font-size:1rem}
+nav a.active,nav a:hover{opacity:1;color:#00cc55}
+main{padding-top:100px}
+.page{display:none;min-height:calc(100vh - 100px);padding:60px 5%;animation:fade .3s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero h2{font-family:Orbitron;font-size:3.8rem;line-height:1.1}
+.hero span{color:#00cc55;text-shadow:0 0 25px rgba(0,204,85,.8)}
+.hero p{margin-top:25px;font-size:1.15rem;max-width:700px;color:#f0f0f0}
+.btn{display:inline-block;margin-top:30px;padding:15px 50px;border-radius:50px;background:linear-gradient(135deg,#00cc55,#00773c);color:#0b1a0f;font-weight:700;text-decoration:none;box-shadow:0 0 40px rgba(0,204,85,.5);transition:.3s}
+.btn:hover{transform:scale(1.05)}
+.title{font-family:Orbitron;font-size:2.6rem;margin-bottom:20px;color:#00cc55}
+.text{max-width:900px;font-size:1.1rem;line-height:1.8;color:#f0f0f0}
+.grid{margin-top:50px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px}
+.card{background:rgba(15,40,25,.85);padding:28px;border-radius:20px;border:1px solid rgba(0,204,85,.25);transition:.35s}
+.card:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.card h3{font-family:Orbitron;color:#00cc55;margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card p{color:#f0f0f0;font-size:1rem}
+.center{max-width:800px;margin:auto;text-align:center}
+footer{text-align:center;padding:30px;background:#06110a;font-size:.9rem;color:#f0f0f0;border-top:1px solid rgba(0,204,85,.2)}
+.badge{display:inline-block;padding:6px 12px;background-color:#cc0000;color:#fff;font-size:0.85rem;font-weight:600;border-radius:12px;line-height:1.2}
+@media(max-width:768px){
+header{flex-direction:column;align-items:flex-start;padding:15px}
+nav{gap:15px;margin-top:10px}
+.hero h2{font-size:2.8rem}
+.hero p{font-size:1.05rem}
+.btn{padding:12px 40px;font-size:0.95rem}
+.title{font-size:2.2rem}
+.text{font-size:1rem}
+.grid{gap:20px}
+.card{padding:20px}
 }
-.container {
-    background: #2c2c3f;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    width: 300px;
-    text-align: center;
-}
-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: none;
-}
-button {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    background: #4caf50;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-button:hover {
-    background: #45a049;
+@media(max-width:480px){
+.hero h2{font-size:2.2rem}
+.hero p{font-size:0.95rem}
+.btn{padding:10px 35px;font-size:0.9rem}
+.title{font-size:1.9rem}
+.text{font-size:0.95rem}
 }
 </style>
 </head>
 <body>
-<div class="container">
-    <h2>SilentNotes Codes</h2>
-    <input type="text" id="username" placeholder="Inserisci il tuo username silentnotes">
-    <input type="text" id="code" placeholder="Inserisci il codice">
-    <button onclick="sendClaim()">Riscatta codice</button>
+
+<div class="bg"></div>
+
+<header>
+<h1>NEVERMEDM'S GANG</h1>
+<nav>
+<a href="#" class="active" data-page="home">Home</a>
+<a href="#" data-page="chi">Chi siamo</a>
+<a href="#" data-page="attivita">Attività</a>
+<a href="#" data-page="team">Team</a>
+<a href="#" data-page="altaccount">Alt Account</a>
+<a href="#" data-page="contatti">Contatti</a>
+</nav>
+</header>
+
+<main>
+<section id="home" class="page active hero">
+<h2>Gruppo<br>Anti Maranza</h2>
+<p>
+NeverMedM's Gang è un gruppo organizzato su Brookhaven, nato per creare una comunità seria e rispettosa. Non è roleplay né finzione: promuove ordine, disciplina e collaborazione tra i membri.
+</p>
+<a class="btn" href="#" data-page="chi">Scopri di più</a>
+</section>
+
+<section id="chi" class="page">
+<h2 class="title">Chi siamo</h2>
+<p class="text">
+NeverMedM's Gang è un gruppo anti-maranza dove ogni giorno operiamo sui server maranza per fare pulizia.  
+Selezioniamo membri affidabili, motivati e disciplinati.  
+Il nostro motto è <strong>Ordine, Disciplina e Sicurezza</strong>.  
+Garantiamo un ambiente pulito, sicuro e organizzato su Brookhaven.
+</p>
+</section>
+
+<section id="attivita" class="page">
+<h2 class="title">Attività principali</h2>
+<div class="grid">
+<div class="card">
+<h3>Monitoraggio</h3>
+<p>Controlliamo le zone principali del gioco per prevenire problemi e caos.</p>
 </div>
+<div class="card">
+<h3>Supporto Membri</h3>
+<p>Aiutiamo membri affidabili a integrarsi e operare nel gruppo in modo efficace.</p>
+</div>
+<div class="card">
+<h3>Organizzazione</h3>
+<p>Pianifichiamo attività e strategie per mantenere il gruppo coeso e attivo.</p>
+</div>
+</div>
+</section>
+
+<section id="team" class="page">
+<h2 class="title">Il Team</h2>
+<div class="grid">
+<div class="card">
+<h3>Leader</h3>
+<p>Gestisce e coordina l'intero gruppo con autorità e strategia, prendendo le decisioni principali.</p>
+</div>
+<div class="card">
+<h3>Manager</h3>
+<p>Supporta il leader, supervisiona le operazioni e assicura che tutto proceda senza intoppi.</p>
+</div>
+<div class="card">
+<h3>Rinforzi</h3>
+<p>Specialisti pronti a intervenire rapidamente per supportare missioni critiche e aiutare i membri in difficoltà.</p>
+</div>
+<div class="card">
+<h3>Membri <span class="badge">Richiesto un alt account NeverMedM per questo ruolo</span></h3>
+<p>Partecipano attivamente alle attività quotidiane del gruppo e seguono le direttive dei superiori.</p>
+</div>
+</div>
+</section>
+
+<section id="altaccount" class="page">
+<div class="center">
+<h2 class="title">Alt Account NeverMedM</h2>
+<p class="text">
+Un <strong>Alt Account</strong> è un account secondario creato appositamente con il prefisso <strong>NeverMedM</strong> seguito dal numero ID che decidi tu.  
+Questo tipo di account è richiesto per ottenere il ruolo <span class="badge">Membri</span> all'interno del gruppo.
+</p>
+<p class="text">
+Ogni alt account deve essere unico e verificabile, permettendo di partecipare alle attività del gruppo senza usare il tuo account principale.  
+Seguire questo schema garantisce sicurezza, ordine e tracciabilità all’interno del gruppo.
+</p>
+<p class="text">
+Ad esempio, se scegli l'ID <strong>5678</strong>, il tuo alt account dovrà avere il nome: <strong>NeverMedM5678</strong>.
+</p>
+<p class="text">
+<strong>Importante:</strong> per completare l'iscrizione devi contattare il profilo ufficiale TikTok: <strong>nevermedms.gang</strong> e segnalare il tuo alt account.  
+L’uso improprio o duplicazioni possono comportare la perdita del ruolo o l’esclusione dal gruppo.
+</p>
+<a class="btn" href="#" data-page="contatti">Richiedi il tuo Alt Account</a>
+</div>
+</section>
+
+<section id="contatti" class="page">
+<div class="center">
+<h2 class="title">Contatti</h2>
+<p class="text">
+Per richieste di accesso o informazioni sul gruppo, contattaci tramite il nostro canale ufficiale TikTok o invia una richiesta via email.
+</p>
+<a class="btn" href="https://form.jotform.com/253615181073049">Richiedi Accesso</a>
+</div>
+</section>
+</main>
+
+<footer>
+© 2025 NeverMedM's Gang · Gruppo Serio Brookhaven
+</footer>
 
 <script>
-async function sendClaim() {
-    const username = document.getElementById('username').value.trim();
-    const code = document.getElementById('code').value.trim();
-
-    if(!username || !code){
-        Swal.fire({
-            icon: 'error',
-            title: 'Errore',
-            text: 'Per favore, inserisci username e codice!'
-        });
-        return;
-    }
-
-    try {
-        const response = await fetch('/claim', {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, code })
-        });
-
-        const result = await response.json();
-
-        if(response.ok && result.success){
-            Swal.fire({
-                icon: 'success',
-                title: 'Codice Riscattato!',
-                text: result.message
-            });
-            document.getElementById('username').value = '';
-            document.getElementById('code').value = '';
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Errore',
-                text: result.message
-            });
-        }
-    } catch (error) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Errore',
-            text: 'Impossibile riscattare il codice.'
-        });
-        console.error(error);
-    }
+const links=document.querySelectorAll("nav a,[data-page]")
+const pages=document.querySelectorAll(".page")
+links.forEach(l=>{
+l.onclick=e=>{
+e.preventDefault()
+const p=l.dataset.page
+if(!p)return
+pages.forEach(s=>s.classList.remove("active"))
+document.getElementById(p).classList.add("active")
+document.querySelectorAll("nav a").forEach(n=>n.classList.remove("active"))
+const a=document.querySelector('nav a[data-page="'+p+'"]')
+if(a)a.classList.add("active")
+window.scrollTo(0,0)
 }
+})
 </script>
+
 </body>
 </html>
